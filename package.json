@@ -1,0 +1,15 @@
+{
+  "name": "chessnut-air",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@abandonware/noble": "^1.9.2-23"
+  },
+  "devDependencies": {
+    "@types/node": "^20.9.2",
+    "ts-node": "^10.9.1",
+    "typed-emitter": "^2.1.0",
+    "typescript": "^5.3.2"
+  }
+}
