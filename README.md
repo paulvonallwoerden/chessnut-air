@@ -20,20 +20,20 @@ await chessnutAir.connectWithBluetooth();
 
 Use these examples to get started with this library.
 
-```ts
-// Install required dependencies
+```sh
+# Install required dependencies
 yarn
 
-// Play a little animation with the LEDs.
+# Play a little animation with the LEDs.
 yarn ts-node examples/led-animation.ts
 
-// Get the name & battery status of your board.
+# Get the name & battery status of your board.
 yarn ts-node examples/print-info.ts
 
-// React to button presses.
+# React to button presses.
 yarn ts-node examples/buttons.ts
 
-// View the position on the board on Lichess
+# View the position on the board on Lichess
 yarn ts-node examples/analyze-on-lichess.ts
 ```
 
@@ -78,6 +78,19 @@ Returns the battery charge level of the board and whether it's charging.
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+### Scripts for development
+
+```sh
+# Build the library
+yarn build
+
+# Lint
+yarn lint
+
+# Fix linting
+yarn lint:fix
+```
 
 ## License
 
