@@ -3,7 +3,20 @@
 An unofficial library for the [Chessnut Air](https://www.chessnutech.com/products/chessnut-air) chess board. It allows
 to communicate with the board over Bluetooth.
 
+## Prerequisites
+
+The underlying Bluetooth library only supports macOS / Mac OS X, Linux, FreeBSD and Windows. Some further setup may be
+required to get it working on your system. Refer to the [Noble Prerequsites](https://www.npmjs.com/package/noble#prerequisites).
+
 ## Getting Started
+
+### Install
+
+```sh
+yarn add chessnut-air
+```
+
+### Usage
 
 ```ts
 const chessnutAir = new ChessnutAir()
@@ -74,6 +87,11 @@ Returns the name of the board.
 ### `getBatteryStatus()`
 
 Returns the battery charge level of the board and whether it's charging.
+
+## Limitations
+
+* You may only connect to a single board at a time. Experimenting with possible solutions is not my priority as I
+only own a single board.
 
 ## Contributing
 

@@ -48,6 +48,38 @@ type BluetoothControllerEvents = {
     'data:board': (pieces: (string | null)[]) => void
 }
 
+export class BluetoothError extends Error {
+    public constructor(
+        public readonly state: string,
+        message: string,
+    ) {
+        super(message)
+    }
+
+    public static fromNobleState(state: string): BluetoothError {
+        switch (state) {
+            case 'poweredOff': {
+                return new BluetoothError(state, 'Bluetooth is powered off')
+            }
+            case 'unauthorized': {
+                return new BluetoothError(state, 'Bluetooth is unauthorized')
+            }
+            case 'unknown': {
+                return new BluetoothError(state, 'Bluetooth is in an unknown state')
+            }
+            case 'unsupported': {
+                return new BluetoothError(state, 'Bluetooth is unsupported')
+            }
+            case 'resetting': {
+                return new BluetoothError(state, 'Bluetooth is resetting')
+            }
+            default: {
+                return new BluetoothError(state, `Unknown bluetooth state`)
+            }
+        }
+    }
+}
+
 export class BluetoothController extends (EventEmitter as new () => TypedEventEmitter<BluetoothControllerEvents>) {
     private lastSeenBoardData: Buffer | null = null
 
@@ -64,12 +96,17 @@ export class BluetoothController extends (EventEmitter as new () => TypedEventEm
         this.characteristics = null
         this.peripheral = null
 
-        await new Promise<void>((resolve) =>
-            noble.on('stateChange', async (state) => {
-                if (state === 'poweredOn') {
-                    await noble.startScanningAsync()
-                    resolve()
+        await new Promise<void>((resolve, reject) =>
+            noble.once('stateChange', async (state) => {
+                if (state !== 'poweredOn') {
+                    reject(BluetoothError.fromNobleState(state))
+
+                    return
                 }
+
+                // Bluetooth is powered on, start scanning
+                await noble.startScanningAsync()
+                resolve()
             }),
         )
 
@@ -84,11 +121,11 @@ export class BluetoothController extends (EventEmitter as new () => TypedEventEm
     }
 
     public async stop(): Promise<void> {
-        if (!this.peripheral) {
-            throw new Error('Cannot stop before board is connected')
-        }
+        this.peripheral?.removeAllListeners()
+        noble.removeAllListeners()
 
-        await this.peripheral.disconnectAsync()
+        await this.peripheral?.disconnectAsync()
+        await noble.stopScanningAsync()
     }
 
     public async sendCommand(command: Buffer): Promise<void> {
@@ -102,15 +139,15 @@ export class BluetoothController extends (EventEmitter as new () => TypedEventEm
         const promise = new Promise<Buffer>((resolve, reject) => {
             const listener = (dataHeader: string, data: Buffer) => {
                 if (dataHeader === header) {
-                    this.removeListener('data:misc', listener)
+                    this.off('data:misc', listener)
                     resolve(data)
                 }
             }
 
-            this.addListener('data:misc', listener)
+            this.on('data:misc', listener)
 
             setTimeout(() => {
-                this.removeListener('data:misc', listener)
+                this.off('data:misc', listener)
                 reject(new Error(`Timeout while waiting for response with header ${header}`))
             }, timeoutMs)
         })
