@@ -8,7 +8,7 @@ to communicate with the board over Bluetooth.
 ```ts
 const chessnutAir = new ChessnutAir()
 
-chessnutAir.addEventListener('change', (fen) => {
+chessnutAir.on('change', (fen) => {
     // Log the FEN string whenever a piece is moved on the board.
     console.log('FEN:', fen)
 })
@@ -47,7 +47,7 @@ Scans for nearby Bluetooth devices and connects to the first Chessnut Air board 
 
 Stops scanning for Bluetooth devices and disconnects from the board.
 
-### `addEventListener(event, callback)`
+### `on(event, callback)`
 
 Adds an event listener to the board. Possible events are:
 
