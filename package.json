@@ -10,6 +10,10 @@
     ],
     "license": "GPL-3.0",
     "author": "Paul von Allwörden",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/paulvonallwoerden/chessnut-air.git"
+    },
     "keywords": [
         "chess",
         "chessnut",
