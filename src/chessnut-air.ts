@@ -42,10 +42,6 @@ export class ChessnutAir extends (EventEmitter as new () => TypedEventEmitter<Ch
         return (await deviceName).toString('ascii').trim()
     }
 
-    public getDeviceTime(): Promise<Date> {
-        throw new Error('Not implemented')
-    }
-
     /**
      * Returns the current battery status. The returned object contains the battery percentage (0-100)
      * and whether the board is currently being charged.
