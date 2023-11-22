@@ -109,7 +109,3 @@ yarn lint
 # Fix linting
 yarn lint:fix
 ```
-
-## License
-
-MIT - Do whatever you want with this code.
