@@ -1,6 +1,7 @@
 import EventEmitter from 'events'
 import type TypedEventEmitter from 'typed-emitter'
 import { BluetoothCommand, BluetoothController } from './bluetooth-controller'
+import { encodeLedPayload } from './encode-led-payload'
 
 export type ChessnutAirEvents = {
     change: (fen: string) => void
@@ -21,8 +22,14 @@ export class ChessnutAir extends (EventEmitter as new () => TypedEventEmitter<Ch
         await this.bluetooth.stop()
     }
 
+    /**
+     * Turns on the specified LEDs and turns off all others.
+     *
+     * @param leds An array of strings representing the LEDs to turn on. For example: ['e2', 'e4']
+     */
     public async setLeds(leds: string[]): Promise<void> {
-        await this.bluetooth.setLed(leds)
+        const cmd = Buffer.concat([BluetoothCommand.SetLed, encodeLedPayload(leds)])
+        await this.bluetooth.sendCommand(cmd)
     }
 
     /**

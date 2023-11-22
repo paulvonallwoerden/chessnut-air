@@ -91,42 +91,6 @@ export class BluetoothController extends (EventEmitter as new () => TypedEventEm
         await this.peripheral.disconnectAsync()
     }
 
-    /**
-     * Turns on the specified LEDs and turns off all other LEDs.
-     *
-     * @param leds An array of strings representing the LEDs to turn on. For example, ['a1', 'b2', 'c3']
-     */
-    public async setLed(leds: string[]): Promise<void> {
-        const letterLut: { [key: string]: number } = {
-            a: 128,
-            b: 64,
-            c: 32,
-            d: 16,
-            e: 8,
-            f: 4,
-            g: 2,
-            h: 1,
-        }
-
-        const numberLut: { [key: string]: number } = {
-            '1': 7,
-            '2': 6,
-            '3': 5,
-            '4': 4,
-            '5': 3,
-            '6': 2,
-            '7': 1,
-            '8': 0,
-        }
-
-        const arr: number[] = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
-        for (const pos of leds) {
-            arr[numberLut[pos[1]]] |= letterLut[pos[0]]
-        }
-
-        await this.sendCommand(Buffer.from([0x0a, 0x08, ...arr]))
-    }
-
     public async sendCommand(command: Buffer): Promise<void> {
         assert(this.characteristics, 'Cannot send command before board is connected')
 
