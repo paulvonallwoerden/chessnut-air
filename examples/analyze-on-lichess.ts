@@ -6,7 +6,7 @@ export async function main() {
 
     chessnutAir.on('change', (fen) => {
         const lichessUrl = new URL(fen, 'https://lichess.org/analysis/fromPosition/')
-        console.log(lichessUrl.toString())
+        console.log(new Date().toLocaleTimeString(), lichessUrl.toString())
     })
 }
 
