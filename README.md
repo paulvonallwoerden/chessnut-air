@@ -6,14 +6,14 @@ to communicate with the board over Bluetooth.
 ## Getting Started
 
 ```ts
-const chessnutAir = new ChessnutAir();
+const chessnutAir = new ChessnutAir()
 
 chessnutAir.addEventListener('change', (fen) => {
     // Log the FEN string whenever a piece is moved on the board.
-    console.log('FEN:', fen);
+    console.log('FEN:', fen)
 })
 
-await chessnutAir.connectWithBluetooth();
+await chessnutAir.connectWithBluetooth()
 ```
 
 ## Examples
@@ -51,11 +51,11 @@ Stops scanning for Bluetooth devices and disconnects from the board.
 
 Adds an event listener to the board. Possible events are:
 
-- `change`: Fires whenever a piece is moved on the board. The callback receives the new FEN string as an argument.
-Note that only the piece placement data is relevant as the other parts are static. They can't be determined from
-the board itself. You must keep track of the game state yourself.
-- `button`: Fires whenever a button is pressed on the board. The callback receives the button ID as an argument.
-- `error`: Fires whenever an error occurs. The callback receives the error as an argument.
+-   `change`: Fires whenever a piece is moved on the board. The callback receives the new FEN string as an argument.
+    Note that only the piece placement data is relevant as the other parts are static. They can't be determined from
+    the board itself. You must keep track of the game state yourself.
+-   `button`: Fires whenever a button is pressed on the board. The callback receives the button ID as an argument.
+-   `error`: Fires whenever an error occurs. The callback receives the error as an argument.
 
 ### `setLeds(leds: string[])`
 

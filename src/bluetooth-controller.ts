@@ -38,14 +38,14 @@ const PieceLut: Record<number, string | null> = {
     9: 'B',
     10: 'N',
     11: 'Q',
-    12: 'K'
+    12: 'K',
 }
 
 type BluetoothControllerEvents = {
-    'disconnect': () => void;
-    'data:otb': (data: Buffer) => void;
-    'data:misc': (header: string, data: Buffer) => void;
-    'data:board': (pieces: (string | null)[]) => void;
+    disconnect: () => void
+    'data:otb': (data: Buffer) => void
+    'data:misc': (header: string, data: Buffer) => void
+    'data:board': (pieces: (string | null)[]) => void
 }
 
 export class BluetoothController extends (EventEmitter as new () => TypedEventEmitter<BluetoothControllerEvents>) {
@@ -53,10 +53,10 @@ export class BluetoothController extends (EventEmitter as new () => TypedEventEm
 
     private peripheral: Peripheral | null = null
     private characteristics: {
-        write: Characteristic,
-        readOtbData: Characteristic,
-        readMiscData: Characteristic,
-        readBoardData: Characteristic,
+        write: Characteristic
+        readOtbData: Characteristic
+        readMiscData: Characteristic
+        readBoardData: Characteristic
     } | null = null
 
     public async start(): Promise<void> {
@@ -70,7 +70,7 @@ export class BluetoothController extends (EventEmitter as new () => TypedEventEm
                     await noble.startScanningAsync()
                     resolve()
                 }
-            })
+            }),
         )
 
         await new Promise<void>((resolve) =>
@@ -79,7 +79,7 @@ export class BluetoothController extends (EventEmitter as new () => TypedEventEm
                 if (success) {
                     resolve()
                 }
-            })
+            }),
         )
     }
 
@@ -98,15 +98,15 @@ export class BluetoothController extends (EventEmitter as new () => TypedEventEm
      */
     public async setLed(leds: string[]): Promise<void> {
         const letterLut: { [key: string]: number } = {
-            'a': 128,
-            'b': 64,
-            'c': 32,
-            'd': 16,
-            'e': 8,
-            'f': 4,
-            'g': 2,
-            'h': 1
-        };
+            a: 128,
+            b: 64,
+            c: 32,
+            d: 16,
+            e: 8,
+            f: 4,
+            g: 2,
+            h: 1,
+        }
 
         const numberLut: { [key: string]: number } = {
             '1': 7,
@@ -116,12 +116,12 @@ export class BluetoothController extends (EventEmitter as new () => TypedEventEm
             '5': 3,
             '6': 2,
             '7': 1,
-            '8': 0
-        };
+            '8': 0,
+        }
 
-        const arr: number[] = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00];
+        const arr: number[] = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
         for (const pos of leds) {
-            arr[numberLut[pos[1]]] |= letterLut[pos[0]];
+            arr[numberLut[pos[1]]] |= letterLut[pos[0]]
         }
 
         await this.sendCommand(Buffer.from([0x0a, 0x08, ...arr]))
@@ -231,7 +231,7 @@ export class BluetoothController extends (EventEmitter as new () => TypedEventEm
         for (let i = 0; i < 32; i += 1) {
             const byte = data[i]
             const upperBits = byte >> 4
-            const lowerBits = byte & 0x0F
+            const lowerBits = byte & 0x0f
             const piece1 = PieceLut[lowerBits]
             const piece2 = PieceLut[upperBits]
             assert(piece1 !== undefined, `Unknown piece ${upperBits}`)

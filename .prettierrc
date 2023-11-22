@@ -1,4 +1,4 @@
 printWidth: 120
-semicolons: false
+semi: false
 singleQuote: true
 tabWidth: 4

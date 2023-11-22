@@ -3,8 +3,8 @@ import type TypedEventEmitter from 'typed-emitter'
 import { BluetoothCommand, BluetoothController } from './bluetooth-controller'
 
 export type ChessnutAirEvents = {
-    change: (fen: string) => void,
-    button: (button: number) => void,
+    change: (fen: string) => void
+    button: (button: number) => void
 }
 
 export class ChessnutAir extends (EventEmitter as new () => TypedEventEmitter<ChessnutAirEvents>) {
@@ -57,16 +57,16 @@ export class ChessnutAir extends (EventEmitter as new () => TypedEventEmitter<Ch
     }
 
     private onBoardData(pieces: (string | null)[]) {
-        let fen = '';
+        let fen = ''
         for (let row = 0; row < 8; row += 1) {
-            let emptyCount = 0;
+            let emptyCount = 0
             for (let col = 7; col >= 0; col -= 1) {
                 const index = row * 8 + col
                 const piece = pieces[index]
                 if (piece === null) {
                     emptyCount += 1
 
-                    continue;
+                    continue
                 }
 
                 if (emptyCount > 0) {

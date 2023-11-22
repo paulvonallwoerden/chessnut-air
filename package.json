@@ -1,35 +1,35 @@
 {
-  "name": "chessnut-air",
-  "version": "1.0.0",
-  "description": "A library for communicating with Chessnut Air chess computers",
-  "main": "dist/main.js",
-  "module": "dist/main.mjs",
-  "types": "dist/main.d.ts",
-  "files": [
-    "dist"
-  ],
-  "license": "MIT",
-  "author": "Paul von Allwörden",
-  "keywords": [
-    "chess",
-    "chessnut",
-    "chessnut air"
-  ],
-  "scripts": {
-    "build": "yarn clean && tsup",
-    "clean": "rm -rf dist",
-    "lint": "prettier . --check",
-    "lint:fix": "prettier . --write"
-  },
-  "dependencies": {
-    "@abandonware/noble": "^1.9.2-23"
-  },
-  "devDependencies": {
-    "@types/node": "^20.9.2",
-    "prettier": "3.1.0",
-    "ts-node": "^10.9.1",
-    "tsup": "^8.0.1",
-    "typed-emitter": "^2.1.0",
-    "typescript": "^5.3.2"
-  }
+    "name": "chessnut-air",
+    "version": "1.0.0",
+    "description": "A library for communicating with Chessnut Air chess computers",
+    "main": "dist/main.js",
+    "module": "dist/main.mjs",
+    "types": "dist/main.d.ts",
+    "files": [
+        "dist"
+    ],
+    "license": "MIT",
+    "author": "Paul von Allwörden",
+    "keywords": [
+        "chess",
+        "chessnut",
+        "chessnut air"
+    ],
+    "scripts": {
+        "build": "yarn clean && tsup",
+        "clean": "rm -rf dist",
+        "lint": "prettier . --check",
+        "lint:fix": "prettier . --write"
+    },
+    "dependencies": {
+        "@abandonware/noble": "^1.9.2-23"
+    },
+    "devDependencies": {
+        "@types/node": "^20.9.2",
+        "prettier": "3.1.0",
+        "ts-node": "^10.9.1",
+        "tsup": "^8.0.1",
+        "typed-emitter": "^2.1.0",
+        "typescript": "^5.3.2"
+    }
 }
